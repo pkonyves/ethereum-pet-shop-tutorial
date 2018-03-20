@@ -1,2 +1,0 @@
-#!/bin/bash
-geth --unlock 1 --rpc --rpcport 8545 --rpccorsdomain "*" --rpcapi "web3,eth,net,personal"  --identity "MyTestNetNode" --datadir ~/.ethereum-testnet --nodiscover --networkid 15 --mine --etherbase 1 --minerthreads 1 $@

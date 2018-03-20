@@ -1,0 +1,119 @@
+Script
+1) Explain Ubuntu on Windows, it's called Windows Subsystem for Linux. 
+Since I am a filthy casual, I only use linux as means of having a linux bash and programs.
+
+2) Install geth and solc
+PPA stands for Personal Package Archives. It is for non standard software updates.
+
+sudo add-apt-repository -y ppa:ethereum/ethereum ^C
+sudo apt-get update ^C
+sudo apt-get install ethereum solc
+
+3) Test it
+geth version
+solc --version
+
+4) Before deploying we need to set up our development blockchain
+This is not so straightforward with geth as with Ganache, but let's explore it
+
+4.1) We need a new genesis block that is configured based on a genesis.json file
+     See that we can define ethereum balances in the genesis block
+
+4.2) First create these addresses in the geth wallet
+Geth --datadir ~/.ethereum-testnet account list
+Geth --datadir ~/.ethereum-testnet account new
+Geth --datadir ~/.ethereum-testnet account list
+
+4.3) replace addresses in genesis.json
+
+4.4) Generate the genesis block
+geth --identity "MyTestNetNode" --datadir ~/.ethereum-testnet --nodiscover --networkid 15 init genesis.json
+
+4.5) We can check the balance with the built-in javascript console. 
+Yes the JavaScript VM is implemented in Go as well, called OttoVM
+./geth-test.sh 
+web3.fromWei(eth.getBalance(eth.accounts[0]), "ether")
+
+4.6) Start mining
+./geth-test-mine.sh 
+
+Show 'top'
+
+
+5) Our application will be based on the Truffle pet-shop tutorial.
+This is a website where you can adopt dogs. 
+The state of the adoption is stored on the blockchain, everything else
+is off-chain.
+
+python -m SimpleHTTPServer 8000
+Chrome: http://localhost:8000/index.html
+
+SHOW THE CODE:
+- index.html
+- dog.json
+- app.js
+
+Metamask: connected to the main network
+Funny thing is, even though this contract does not exist on the main network,
+the web3 api does not give any error, but returns with default values. 
+
+console: web3.version , hopefully in the version 
+
+Let's make it work!
+
+6) Contract
+6.1) Write the contract Adoption.sol, explain
+
+contract Adoption {
+    address[16] public adopters;
+
+    function adopt(uint petId) public returns (uint) {
+        require(petId >= 0 && petId <= 16);
+
+        adopters[petId] = msg.sender;
+
+        return petId;
+    }
+
+    function getAdopters() public view returns(address[16]) {
+        return adopters;
+    }
+}
+
+6.2) Compile contract
+solc -o build/ --bin --abi --overwrite src/Adoption.sol
+
+
+7) Deploy the contract
+We basically can use web3 api to deploy the contract. Note that this is a transaction that uses gas and that uses
+a wallet or account.
+
+7.1) 
+./geth-test.sh console 
+use: deploy_contract.js
+
+7.2) Try out the newly created contract,
+web3.eth.defaultAccount = web3.eth.accounts[0]
+adoption.adopt(1)
+
+adoption.getAdopters.call()
+
+
+8) Introduce app.js and index.html
+index.html template
+app.js
+pets.json
+
+Replace the contract address in app.js
+
+8.1) Reload page, see console, MetaMask is not working
+
+9) Connect metamask to our test network, import private key
+9.1) reload page
+
+10) Solidity extra
+10.1) Create an event
+      try from another browser
+10.2) giveBack, onlyOwner
+
+
