@@ -1,6 +1,9 @@
 Script
+0) Reset ethereum
+./scripts/geth-test.sh removedb
+export PS1="\u@\h:.../\W\$ "
+
 1) Explain Ubuntu on Windows, it's called Windows Subsystem for Linux. 
-Since I am a filthy casual, I only use linux as means of having a linux bash and programs.
 
 2) Install geth and solc
 PPA stands for Personal Package Archives. It is for non standard software updates.
@@ -16,15 +19,13 @@ solc --version
 4) Before deploying we need to set up our development blockchain
 This is not so straightforward with geth as with Ganache, but let's explore it
 
-4.1) We need a new genesis block that is configured based on a genesis.json file
-     See that we can define ethereum balances in the genesis block
-
-4.2) First create these addresses in the geth wallet
+4.1) First create these addresses in the geth wallet
 Geth --datadir ~/.ethereum-testnet account list
 Geth --datadir ~/.ethereum-testnet account new
 Geth --datadir ~/.ethereum-testnet account list
 
-4.3) replace addresses in genesis.json
+4.2) We need a new genesis block that is configured based on a genesis.json file
+     See that we can define ethereum balances in the genesis block
 
 4.4) Generate the genesis block
 geth --identity "MyTestNetNode" --datadir ~/.ethereum-testnet --nodiscover --networkid 15 init genesis.json

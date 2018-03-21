@@ -54,13 +54,7 @@ App = {
 
   markAllAdopted: function(adopters) {
     this.contract.getAdopters(function(err, adopters){
-      if (err != null) {
-        console.log("error", err);
-      }
-      else {
-        console.log("adopters", adopters);
-      }
-
+      
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
           $('.panel-pet').eq(i).find('button').text('Adopted').attr('disabled', true);
