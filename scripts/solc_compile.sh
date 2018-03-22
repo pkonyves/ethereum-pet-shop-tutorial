@@ -1,2 +1,2 @@
 #!/bin/bash
-solc -o build/ --bin --abi --overwrite src/Adoption.sol
+solc -o build/ --bin --abi --overwrite contracts/Adoption.sol

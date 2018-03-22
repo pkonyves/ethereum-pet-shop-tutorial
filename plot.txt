@@ -114,7 +114,13 @@ Replace the contract address in app.js
 
 10) Solidity extra
 10.1) Create an event
-      try from another browser
+      
 10.2) giveBack, onlyOwner
+
+
+
+
+Refs:
+https://ethereum-homestead.readthedocs.io/en/latest/
 
 

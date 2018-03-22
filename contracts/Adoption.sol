@@ -9,6 +9,12 @@ contract Adopters {
         return dogId;
     }
 
+    function giveBack(uint dogId) public {
+        require(dogId >= 0 && dogId <= 16);
+        require(adopters[dogId] == msg.sender);
+        adopters[dogId] = 0;
+    }
+
     function getAdopters() public view returns (address[16]) {
         return adopters;
     }

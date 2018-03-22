@@ -7,6 +7,7 @@ App = {
     App.initGUI();
     App.initWeb3();
     App.markAllAdopted();
+    App.logStatus();
   },
 
   initGUI: function() {
@@ -36,10 +37,12 @@ App = {
     this.web3Provider = new Web3(web3.currentProvider);
 
     // Set our contract's ABI and address
-    var abi = [{"constant":true,"inputs":[],"name":"getAdopters","outputs":[{"name":"","type":"address[16]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"adopters","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"petId","type":"uint256"}],"name":"adopt","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+    var abi = [{"constant":false,"inputs":[{"name":"dogId","type":"uint256"}],"name":"giveBack","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getAdopters","outputs":[{"name":"","type":"address[16]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"dogId","type":"uint256"}],"name":"adopt","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"dogId","type":"uint256"}],"name":"Adopted","type":"event"}];
     var contractAddress = '0x31a70980e9219872880b9acd916432f4da75225f';
     this.contract = this.web3Provider.eth.contract(abi).at(contractAddress);
+  },
 
+  logStatus: function() {
     if (this.web3Provider.version.network !== "loading") {
       console.log("connected to network " + this.web3Provider.version.network);
     }
@@ -54,7 +57,7 @@ App = {
 
   markAllAdopted: function(adopters) {
     this.contract.getAdopters(function(err, adopters){
-      
+      console.log(err, adopters);
       for (i = 0; i < adopters.length; i++) {
         if (adopters[i] !== '0x0000000000000000000000000000000000000000') {
           $('.panel-pet').eq(i).find('button').text('Adopted').attr('disabled', true);
@@ -69,7 +72,12 @@ App = {
     var petId = parseInt($(event.target).data('id'));
 
     App.contract.adopt(petId, function(err, result) {
-      $('.panel-pet').eq(petId).find('button').text('Adopted').attr('disabled', true);
+      if (err == null) {
+        $('.panel-pet').eq(petId).find('button').text('Adopted').attr('disabled', true);
+      }
+      else {
+        console.log(err, result)
+      }
     })
   }
   
