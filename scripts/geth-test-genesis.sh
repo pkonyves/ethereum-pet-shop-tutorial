@@ -1,2 +1,3 @@
 #!/bin/bash
-geth --identity "MyTestNetNode" --datadir ~/.ethereum-testnet --nodiscover --networkid 15 init genesis.json
+# create a genesis block
+geth --datadir ~/.ethereum-testnet init genesis.json

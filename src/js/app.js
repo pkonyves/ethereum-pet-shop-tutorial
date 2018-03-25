@@ -37,8 +37,8 @@ App = {
     this.web3Provider = new Web3(web3.currentProvider);
 
     // Set our contract's ABI and address
-    var abi = [{"constant":false,"inputs":[{"name":"dogId","type":"uint256"}],"name":"giveBack","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getAdopters","outputs":[{"name":"","type":"address[16]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"dogId","type":"uint256"}],"name":"adopt","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"dogId","type":"uint256"}],"name":"Adopted","type":"event"}];
-    var contractAddress = '0x31a70980e9219872880b9acd916432f4da75225f';
+    var abi = [{"constant":true,"inputs":[],"name":"getAdopters","outputs":[{"name":"","type":"address[16]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"dogId","type":"uint256"}],"name":"adopt","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"}];
+    var contractAddress = '0xc1aac40e9e6fd3e12d107ebf1616135b6a892823';
     this.contract = this.web3Provider.eth.contract(abi).at(contractAddress);
   },
 
