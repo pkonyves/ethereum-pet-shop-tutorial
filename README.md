@@ -16,6 +16,7 @@ This is an Ethereum-based DApp with a web-gui frontend. The web-gui communicates
         * `./scripts/geth-test.sh console` start a geth javascript console
         * `./scripts/geth-test.sh attach` attach to local geth node
         * `./scripts/geth-test.sh accounts list`
+    * `geth-create-account.sh` creates a new account in geth's wallet
     * `geth-test-genesis.sh` creates the genesis block e.g. `./scripts/geth-test-genesis.sh`
     * `geth-test-mine.sh` starts a mining node
     * `deploy.sh` uses `deploy_contract.js` to deploy the contract to the blockchain using `geth`
